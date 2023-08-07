@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather App</title>
+  </head>
+  <body>
+    <%= form_tag('/search', method: :post) do%>
+      <label for="city">City:</label>
+      <%= text_field_tag :city, '', id: 'city' %>
+      <%= submit_tag "Search" %>
+    <% end %>
+
+  </body>
+</html>

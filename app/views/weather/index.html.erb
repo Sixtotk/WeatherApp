@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body>
+  <div class="container mt-5">
+    <%= form_tag('/search', method: :post, id: 'weather-form', class: 'mb-3') do %>
+      <div class="d-flex justify-content-center align-items-center">
+        <label for="city" class="me-2">Ciudad:</label>
+        <%= text_field_tag :city, '', id: 'city', class: 'form-control me-2' %>
+        <%= submit_tag "Buscar", id: 'search-button', disabled: false, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+
+    <div id="weather-results" class="d-flex justify-content-center">
+      <%= render partial: 'weather_result', locals: { weather_data: @weather_data } %>
+    </div>
+
+    <%= link_to 'Historial', history_path, class: 'btn btn-secondary mt-3' %>
+  </div>
+
+  <script>
+    const weatherForm = document.getElementById("weather-form");
+    const weatherResults = document.getElementById("weather-results");
+
+    weatherForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const city = document.getElementById("city").value;
+
+      fetch(`/search?city=${city}`, { headers: { "Turbo-Frame": "weather-results" } })
+        .then(response => response.text())
+        .then(data => weatherResults.innerHTML = data);
+    });
+  </script>
+</body>
+</html>

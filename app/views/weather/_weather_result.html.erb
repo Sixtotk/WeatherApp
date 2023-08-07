@@ -1,0 +1,13 @@
+<div class="card text-center">
+  <% if weather_data %>
+    <div class="card-body">
+      <h1 class="card-title">Clima en <%= weather_data['name'] %></h1>
+      <p class="card-text">Temperatura: <%= weather_data['main']['temp'] %> °C</p>
+      <p class="card-text">Descripción del clima: <%= weather_data['weather'][0]['description'] %></p>
+    </div>
+  <% else %>
+    <div class="card-body">
+      <p class="card-text">No se encontraron datos para esa ciudad.</p>
+    </div>
+  <% end %>
+</div>
